@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <definitions 
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="WebServer" targetNamespace="http://syntech/" xmlns:tns="http://syntech/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:fi="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service" xmlns:tcp="http://java.sun.com/xml/ns/wsit/2006/09/policy/soaptcp/service" xmlns:wsat="http://schemas.xmlsoap.org/ws/2004/10/wsat" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" 
+ >
+    <message name="hello"/>
+    <message name="helloResponse"/>
+    <message name="insert"/>
+    <message name="insertResponse"/>
+    <message name="update"/>
+    <message name="updateResponse"/>
+    <message name="delete"/>
+    <message name="deleteResponse"/>
+    <portType name="WebServer">
+        <operation name="hello">
+            <input message="tns:hello"/>
+            <output message="tns:helloResponse"/>
+        </operation>
+        <operation name="insert">
+            <input message="tns:insert"/>
+            <output message="tns:insertResponse"/>
+        </operation>
+        <operation name="update">
+            <input message="tns:update"/>
+            <output message="tns:updateResponse"/>
+        </operation>
+        <operation name="delete">
+            <input message="tns:delete"/>
+            <output message="tns:deleteResponse"/>
+        </operation>
+    </portType>
+    <binding name="WebServerPortBinding" type="tns:WebServer">
+        <wsp:PolicyReference URI="#WebServerPortBindingPolicy"/>
+        <operation name="hello">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="insert">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="update">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="delete">
+            <wsp:PolicyReference URI="#WebServerPortBinding_delete_Policy"/>
+            <input/>
+            <output/>
+        </operation>
+    </binding>
+    <service name="WebServer">
+        <port name="WebServerPort" binding="tns:WebServerPortBinding"/>
+    </service>
+    <wsp:Policy wsu:Id="WebServerPortBindingPolicy">
+        <wsp:ExactlyOne>
+            <wsp:All/>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WebServerPortBinding_delete_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <wsat:ATAssertion wsp:Optional="true"/>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WebServerPortBinding_search_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WebServerPortBinding_search_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WebServerPortBinding_browse_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WebServerPortBinding_browse_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</definitions>
